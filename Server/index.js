@@ -9,6 +9,15 @@ app.use('/' , express.static('public'));
 
 app.get('/books' , (req, res) => {
     let queryString = 'SELECT books.bookTitle, books.bookStatus FROM books'
+    db.client.query(queryString, (err, result) => {
+        if (err) {
+            console.log(err ? err.stack : result.rows[0].message)
+            res.send(err);
+        } else {
+            console.log(result.rows);
+            res.send(result.rows);
+        }
+    })
 })
 
 app.post('/rental' , (req, res) => {
