@@ -25,8 +25,9 @@ DROP TABLE IF EXISTS borrowed CASCADE;
 CREATE TABLE IF NOT EXISTS borrowed (
   username varchar(30) NOT NULL,
   membershipNumber int NOT NULL,
+  bookID int NOT NULL,
   dateRented date NOT NULL,
-  durationOfRental int NOT NULL,
+  durationOfRental varchar(10) NOT NULL,
   returnDate date NOT NULL
 );
 
