@@ -25,15 +25,13 @@ class BookEntry extends React.Component {
     dueDate.setDate(dueDate.getDate() + parseInt(this.state.durationOfRental));
 
     axios.post('/rent', {
-      params: {
         userName: this.state.userName,
         membershipNumber: parseInt(this.state.membershipNumber),
         bookID: this.props.book.bookid,
         dateRented: dateRented,
         durationOfRental: this.state.durationOfRental,
         returnDate: dueDate
-      }
-    })
+      })
     .then((response) => {
       console.log(response);
     })

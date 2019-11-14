@@ -22,16 +22,28 @@ app.get('/books' , (req, res) => {
 })
 
 app.post('/rent' , (req, res) => {
-    console.log(req.params, req.body);
-    let queryString = `INSERT INTO borrowed(username, membershipNumber, bookID, dateRented, durationOfRental, returnDate)
-    VALUES($1, $2 ,$3, $4, $5, $6)`
+    const { userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate} = req.body;
+    let queryString = `INSERT INTO borrowed(username, membershipnumber, bookid, daterented, durationofrental, returndate)
+    VALUES($1, $2 ,$3, $4, $5, $6)`;
     db.client.query(queryString, 
-        [req.params.userName, req.params.membershipNumber, req.params.bookID, req.params.dateRented, req.params.durationOfRental, req.params.returnDate], 
+        [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate], 
         (err, results) => {
-            if (err) res.send(err);
-            res.send(results);
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(results);
+                changeBookStatus(bookID);
+            }
     });
+
 })
+
+let changeBookStatus = (bookID) => {
+    let queryString = ''
+    db.client.query(queryString)
+}
+
+
 
 // app.update('/return', (req, res) => {
 
