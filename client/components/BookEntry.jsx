@@ -2,11 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const EachBook = styled.div`
-  /* display: flex;
-  justify-content: center; */
-`
-
 class BookEntry extends React.Component {
   constructor(props) {
     super(props)
@@ -93,14 +88,14 @@ class BookEntry extends React.Component {
   }
   render() {
     return (
-      <EachBook>
+      <div>
         <div>Book Title: {this.props.book.booktitle}</div>
         Book Status: {this.state.bookStatus === false ? 'Available!' : 'Already Rented!'}
         {this.state.bookStatus === false ?
           <form id="rent" onSubmit={this.onSubmit}>
-              {/* <div>Enter Username: 
+              <div>Enter Username: 
                 <input id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Username"></input>
-              </div> */}
+              </div>
               <div>Enter Membership Number: 
                 <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
               </div>
@@ -114,9 +109,12 @@ class BookEntry extends React.Component {
             <div>Enter Membership Number: 
               <input id="membership" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></input>
             </div>
+            <div>Enter Membership Number: 
+                <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
+              </div>
             <button>Click Return Book!</button>  
          </form>}
-      </EachBook>
+      </div>
     )
   }
 }

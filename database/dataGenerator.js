@@ -10,7 +10,6 @@ let generateUsers = () => {
         let queryString = 'INSERT INTO users (username) VALUES ($1)';
         db.client.query(queryString, [userObj[key]], (error, results) => {
             if (error) console.log(error);
-            // if (results) console.log(results);
         })
     }
 }
@@ -27,7 +26,6 @@ let generateBooks = () => {
         let queryString = 'INSERT INTO books (booktitle, bookstatus) VALUES ($1, $2)'
         db.client.query(queryString, [bookObj[key], false], (error, results) => {
             if (error) console.log(error);
-            // if (results) console.log(results);
         })
     }
 }

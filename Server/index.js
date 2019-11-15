@@ -23,7 +23,7 @@ app.get('/books' , (req, res) => {
 
 app.post('/rent' , (req, res) => {
     const { userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate} = req.body;
-    db.client.query('SELECT username from users where membershipnumber = $1', [membershipNumber])
+    db.client.query('SELECT username from users where membershipnumber = $1 AND username = $2', [membershipNumber, userName])
         .then((response) => {
             if (response.rows.length === 0) {
                 res.send(false);
