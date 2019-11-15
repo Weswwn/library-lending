@@ -34,7 +34,6 @@ app.post('/rent' , (req, res) => {
                     [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate], 
                     (err, results) => {
                         if (err) {
-                            console.log(err)
                             res.status(400).send(err)
                         } else {
                             res.send(results);
@@ -51,7 +50,6 @@ app.post('/rent' , (req, res) => {
 
 app.put('/return', (req, res) => {
     let { membershipNumber, bookID } = req.body;
-    console.log(membershipNumber, bookID);
     let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND bookid = $2'
     db.client.query(queryString, [membershipNumber, bookID])
         .then((result) => {

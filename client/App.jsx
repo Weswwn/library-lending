@@ -8,26 +8,47 @@ class App extends React.Component {
     this.state = {
         availableBooks: []
     }
+    this.filterBooks = this.filterBooks.bind(this);
+    this.getAllBooks = this.getAllBooks.bind(this);
   }
   componentDidMount() {
+    this.getAllBooks();
+  }
+
+  getAllBooks(filter = false) {
     axios.get('/books')
       .then((response) => {
-        console.log(response.data);
-        this.setState ({
-          availableBooks: response.data
-        })
+        if (filter === true) {
+          let tempArray = [...response.data];
+          tempArray = tempArray.filter(book => book.bookstatus === false);
+          console.log(tempArray);
+          this.setState({
+            availableBooks: tempArray
+          })
+        } else {
+          this.setState ({
+            availableBooks: response.data
+          })
+        }
       })
       .catch((error) => {
         console.log(error);
       })
   }
-  // componentDidUpdate(prevState) {
-  //   // if ()
-  // }
+
+  filterBooks() {
+    this.getAllBooks(true)
+  }
 
   render () {
     return (
-      <BookList availableBooks={this.state.availableBooks}/> 
+      <div>
+        <button onClick={this.filterBooks}>See Only Available Books</button>
+        <button onClick={this.getAllBooks}>See All Books</button>
+        <span>
+          <BookList availableBooks={this.state.availableBooks}/>
+        </span>
+      </div>
     )
   }
 }
