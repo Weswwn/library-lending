@@ -7,7 +7,6 @@ const EachBook = styled.div`
   padding: 20px 20px 20px 20px;
   border: 2px solid #1abc9c;
   border-radius: 25px;
-  
 `
 const BookDetails = styled.div`
   margin-bottom: 30px;
@@ -35,12 +34,10 @@ const TextBox = styled.input`
   border-bottom: 1px solid black;
   width: 180px;
 `
-
 const FormStyle = styled.form`
   width: 250px;
   height: 130px;
 `
-
 class BookEntry extends React.Component {
   constructor(props) {
     super(props)
@@ -62,11 +59,12 @@ class BookEntry extends React.Component {
       let dateRented = new Date(Date.now());
       let dueDate = new Date(Date.now());
       dueDate.setDate(dueDate.getDate() + parseInt(this.state.durationOfRental));
+      let { updateList, book} = this.props;
   
       axios.post('/rent', {
           userName: this.state.userName,
           membershipNumber: parseInt(this.state.membershipNumber),
-          bookID: this.props.book.bookid,
+          bookID: book.bookid,
           dateRented: dateRented,
           durationOfRental: this.state.durationOfRental,
           returnDate: dueDate
@@ -78,6 +76,7 @@ class BookEntry extends React.Component {
           this.setState({
             bookStatus: true
           })
+          updateList(true, book.bookid)
         }
       })
       .catch((error) => {
@@ -88,9 +87,10 @@ class BookEntry extends React.Component {
 
   onReturn(e) {
     e.preventDefault();
+    let { updateList, book } = this.props;
     axios.put('/return' , {
       membershipNumber: this.state.membershipNumber,
-      bookID: this.props.book.bookid
+      bookID: book.bookid
     })
     .then((response) => {
       if (response.data === false) {
@@ -100,6 +100,7 @@ class BookEntry extends React.Component {
         this.setState({
           bookStatus: false
         })
+        updateList(false, book.bookid)
       }
     })
     .catch((error) => {
@@ -149,7 +150,7 @@ class BookEntry extends React.Component {
           </FormStyle>
        : 
          <FormStyle id="return" onSubmit={this.onSubmit}>
-            <div>Membership Number: 
+            <div>Username: 
               <TextBox id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></TextBox>
             </div>
             <div>Membership Number: 

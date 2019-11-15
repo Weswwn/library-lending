@@ -13,10 +13,10 @@ class BookList extends React.Component {
     super(props)
   }
   render() {
-    const { availableBooks } = this.props
+    const { availableBooks, updateList } = this.props
     return (
       <EachBook>
-          {availableBooks.map(book => <BookEntry key={book.bookid} book={book}/> )}
+          {availableBooks.map(book => <BookEntry updateList={updateList} key={book.bookid} book={book}/> )}
       </EachBook>
     )
   }

@@ -36,26 +36,18 @@ class App extends React.Component {
     }
     this.filterBooks = this.filterBooks.bind(this);
     this.getAllBooks = this.getAllBooks.bind(this);
+    this.updateList = this.updateList.bind(this);
   }
   componentDidMount() {
     this.getAllBooks();
   }
 
-  getAllBooks(filter = false) {
+  getAllBooks() {
     axios.get('/books')
       .then((response) => {
-        if (filter === true) {
-          let tempArray = [...response.data];
-          tempArray = tempArray.filter(book => book.bookstatus === false);
-          console.log(tempArray);
-          this.setState({
-            availableBooks: tempArray
-          })
-        } else {
-          this.setState ({
-            availableBooks: response.data
-          })
-        }
+        this.setState ({
+          availableBooks: response.data
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +55,27 @@ class App extends React.Component {
   }
 
   filterBooks() {
-    this.getAllBooks(true)
+    let { availableBooks } = this.state;
+    let tempArray = [...availableBooks];
+      tempArray = tempArray.filter(book => book.bookstatus === false);
+      console.log(tempArray);
+      this.setState({
+        availableBooks: tempArray
+      })
+  }
+
+  updateList(bookStatus, bookID) {
+    let { availableBooks } = this.state;
+    let temp = [...availableBooks];
+
+    for (let i = 0; i < temp.length; i++) {
+      if (temp[i].bookid === bookID) {
+        temp[i].bookstatus = bookStatus;
+      }
+    }
+    this.setState({
+      availableBooks: temp
+    })
   }
 
   render () {
@@ -74,7 +86,7 @@ class App extends React.Component {
           <ButtonStyle onClick={this.getAllBooks}>See All Books</ButtonStyle>
         </MainButtons>
         <span>
-          <BookList availableBooks={this.state.availableBooks}/>
+          <BookList updateList={this.updateList} availableBooks={this.state.availableBooks}/>
         </span>
       </div>
     )
