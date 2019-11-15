@@ -7,7 +7,6 @@ const EachBook = styled.div`
   align-items: center;
   justify-content: center;
 `
-
 class BookList extends React.Component {
   constructor(props) {
     super(props)

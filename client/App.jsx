@@ -9,7 +9,6 @@ const MainButtons = styled.div`
   justify-content: center;
   margin: 20px 20px 20px 20px;
 `
-
 const ButtonStyle = styled.button`
   display: inline-block;
   color: palevioletred;
@@ -27,7 +26,6 @@ const ButtonStyle = styled.button`
     cursor: pointer;
   }
 `
-
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -38,6 +36,7 @@ class App extends React.Component {
     this.getAllBooks = this.getAllBooks.bind(this);
     this.updateList = this.updateList.bind(this);
   }
+  
   componentDidMount() {
     this.getAllBooks();
   }
