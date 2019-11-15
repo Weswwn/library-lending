@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const EachBook = styled.div`
-  border: 1 black;
+  /* display: flex;
+  justify-content: center; */
 `
 
 class BookEntry extends React.Component {
@@ -12,13 +13,14 @@ class BookEntry extends React.Component {
     this.state = {
       userName: '',
       membershipNumber: '',
-      bookStatus: [],
-      durationOfRental: 0
+      bookStatus: this.props.book.bookstatus, 
     }
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onReturn = this.onReturn.bind(this);
   }
+
+
   onSubmit(e) {
     if (e.target.id === 'return') {
       this.onReturn(e)
@@ -37,7 +39,13 @@ class BookEntry extends React.Component {
           returnDate: dueDate
         })
       .then((response) => {
-        console.log(response);
+        if (response.data === false) {
+          alert('You have entered an incorrect membership number!');
+        } else {
+          this.setState({
+            bookStatus: true
+          })
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -56,6 +64,9 @@ class BookEntry extends React.Component {
         alert('Incorrect membership number or you have not checked out this book!')
       } else {
         console.log(response.data);
+        this.setState({
+          bookStatus: false
+        })
       }
     })
     .catch((error) => {
@@ -83,19 +94,18 @@ class BookEntry extends React.Component {
   render() {
     return (
       <EachBook>
-        Book Title: {this.props.book.booktitle}
-        <div>{' '} </div>
-        Book Status: {this.props.book.bookstatus === false ? 'Available!' : 'Not Available'}
-        {this.props.book.bookstatus === false ?
+        <div>Book Title: {this.props.book.booktitle}</div>
+        Book Status: {this.state.bookStatus === false ? 'Available!' : 'Already Rented!'}
+        {this.state.bookStatus === false ?
           <form id="rent" onSubmit={this.onSubmit}>
-              <div>Enter Username: 
+              {/* <div>Enter Username: 
                 <input id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Username"></input>
-              </div>
+              </div> */}
               <div>Enter Membership Number: 
                 <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
               </div>
               <div>Enter Amount of Days You Wish to Rent: 
-                <input id="durationOfRent" type="number" min="1" max="7" onChange={this.onChange}></input>
+                <input id="durationOfRent" type="number" minLength="1" min="1" max="7" onChange={this.onChange}></input>
               </div>
               <button>Click to Rent Book!</button>
           </form>

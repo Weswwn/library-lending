@@ -21,7 +21,9 @@ class App extends React.Component {
         console.log(error);
       })
   }
-
+  // componentDidUpdate(prevState) {
+  //   // if ()
+  // }
 
   render () {
     return (
