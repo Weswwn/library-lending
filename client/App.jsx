@@ -58,7 +58,6 @@ class App extends React.Component {
     let { availableBooks } = this.state;
     let tempArray = [...availableBooks];
       tempArray = tempArray.filter(book => book.bookstatus === false);
-      console.log(tempArray);
       this.setState({
         availableBooks: tempArray
       })
