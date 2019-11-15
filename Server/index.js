@@ -32,21 +32,42 @@ app.post('/rent' , (req, res) => {
                 res.send(err)
             } else {
                 res.send(results);
-                changeBookStatus(bookID);
+                changeBookStatus(bookID, true);
             }
     });
 
 })
 
-let changeBookStatus = (bookID) => {
-    let queryString = ''
-    db.client.query(queryString)
+app.put('/return', (req, res) => {
+    let { membershipNumber, bookID } = req.body;
+    console.log(membershipNumber, bookID);
+    let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND bookid = $2'
+    db.client.query(queryString, [membershipNumber, bookID], (error, result) => {
+        if (error) {
+            console.log(error);
+            res.send(error);
+        } else {
+            if (result.rowCount === 0) {
+                res.send(false)
+            } else {
+                res.send(true);
+            }
+        }
+    })
+    changeBookStatus(bookID, false)
+})
+
+// ====================== HELPER FUNCTION =========================
+
+let changeBookStatus = (bookID, status) => {
+    let queryString = 'UPDATE books SET bookstatus = $1 WHERE bookid = $2'
+    db.client.query(queryString, [status, bookID], (err, results) => {
+        if (err) {
+            console.log(error);
+        } else {
+            console.log(results);
+        }
+    })
 }
-
-
-
-// app.update('/return', (req, res) => {
-
-// })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
