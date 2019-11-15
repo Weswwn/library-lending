@@ -105,7 +105,7 @@ class BookEntry extends React.Component {
                 <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
               </div>
               <div>Enter Amount of Days You Wish to Rent: 
-                <input id="durationOfRent" type="number" minLength="1" min="1" max="7" onChange={this.onChange}></input>
+                <input id="durationOfRent" type="number" required minLength="1" min="1" max="7" onChange={this.onChange}></input>
               </div>
               <button>Click to Rent Book!</button>
           </form>
