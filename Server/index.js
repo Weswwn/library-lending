@@ -11,59 +11,58 @@ app.use(morgan('dev'));
 app.use('/' , express.static('public'));
 
 app.get('/books' , (req, res) => {
-    let queryString = 'SELECT * FROM books';
-    db.client.query(queryString)
-        .then((result) => {
-            res.send(result.rows);
-        })
-        .catch((error) => {
-            console.log(error ? error.stack : result.rows[0].message);
-        })
+  let queryString = 'SELECT * FROM books';
+  db.client.query(queryString)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error ? error.stack : result.rows[0].message);
+    })
 })
 
 app.post('/rent' , (req, res) => {
-    const { userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate} = req.body;
-    db.client.query('SELECT username from users where membershipnumber = $1 AND username = $2', [membershipNumber, userName])
-        .then((response) => {
-            if (response.rows.length === 0) {
-                res.send(false);
-            } else {
-                let queryString = `INSERT INTO borrowed(username, membershipnumber, bookid, daterented, durationofrental, returndate)
-                VALUES($1, $2 ,$3, $4, $5, $6)`;
-                db.client.query(queryString, 
-                    [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate], 
-                    (err, results) => {
-                        if (err) {
-                            res.status(400).send(err)
-                        } else {
-                            res.send(results);
-                            changeBookStatus(bookID, true);
-                        }
-                });
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-
+  const { userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate} = req.body;
+  db.client.query('SELECT username from users where membershipnumber = $1 AND username = $2', [membershipNumber, userName])
+    .then((response) => {
+      if (response.rows.length === 0) {
+        res.send(false);
+      } else {
+        let queryString = `INSERT INTO borrowed(username, membershipnumber, bookid, daterented, durationofrental, returndate)
+        VALUES($1, $2 ,$3, $4, $5, $6)`;
+        db.client.query(queryString, 
+          [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate], 
+            (err, results) => {
+              if (err) {
+                res.status(400).send(err)
+              } else {
+                res.send(results);
+                changeBookStatus(bookID, true);
+              }
+          });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 })
 
 app.put('/return', (req, res) => {
-    let { membershipNumber, bookID } = req.body;
-    let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND bookid = $2'
-    db.client.query(queryString, [membershipNumber, bookID])
-        .then((result) => {
-            if (result.rowCount === 0) {
-                res.send(false);
-            } else {
-                res.send(true);
-                changeBookStatus(bookID, false)
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-            res.send(error);
-        })
+  let { membershipNumber, bookID } = req.body;
+  let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND bookid = $2'
+  db.client.query(queryString, [membershipNumber, bookID])
+    .then((result) => {
+      if (result.rowCount === 0) {
+        res.send(false);
+      } else {
+        res.send(true);
+        changeBookStatus(bookID, false)
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send(error);
+    })
 })
 
 

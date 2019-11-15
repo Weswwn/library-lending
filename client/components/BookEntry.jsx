@@ -12,6 +12,35 @@ const EachBook = styled.div`
 const BookDetails = styled.div`
   margin-bottom: 30px;
 `
+const FormButton = styled.button`
+  display: inline-block;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  border: none;
+  background: none;
+  display: block;
+  margin: 10px 10px 10px 10px; 
+  outline: 0;
+  box-shadow: none!important;
+  :hover {
+    color: red;
+    cursor: pointer;
+  }
+`
+const TextBox = styled.input`
+  display: flex;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid black;
+  width: 180px;
+`
+
+const FormStyle = styled.form`
+  width: 250px;
+  height: 130px;
+`
+
 class BookEntry extends React.Component {
   constructor(props) {
     super(props)
@@ -95,7 +124,7 @@ class BookEntry extends React.Component {
       })
     }
   }
-  
+
   render() {
     return (
       <EachBook>
@@ -106,28 +135,28 @@ class BookEntry extends React.Component {
           </div>
         </BookDetails>
         {this.state.bookStatus === false ?
-          <form id="rent" onSubmit={this.onSubmit}>
-              <div>Enter Username: 
-                <input id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Username"></input>
+          <FormStyle id="rent" onSubmit={this.onSubmit}>
+              <div>Username: 
+                <TextBox id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Username"></TextBox>
               </div>
-              <div>Enter Membership Number: 
-                <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
+              <div>Membership Number: 
+                <TextBox id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></TextBox>
               </div>
-              <div>Enter Amount of Days You Wish to Rent: 
-                <input id="durationOfRent" type="number" required minLength="1" min="1" max="7" onChange={this.onChange}></input>
+              <div>Number of Days: 
+                <TextBox id="durationOfRent" type="number" required minLength="1" min="1" max="7" onChange={this.onChange}></TextBox>
               </div>
-              <button>Click to Rent Book!</button>
-          </form>
+              <FormButton>Click to Rent Book!</FormButton>
+          </FormStyle>
        : 
-         <form id="return" onSubmit={this.onSubmit}>
-            <div>Enter Membership Number: 
-              <input id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></input>
+         <FormStyle id="return" onSubmit={this.onSubmit}>
+            <div>Membership Number: 
+              <TextBox id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></TextBox>
             </div>
-            <div>Enter Membership Number: 
-                <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>
+            <div>Membership Number: 
+                <TextBox id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></TextBox>
               </div>
-            <button>Click Return Book!</button>  
-         </form>}
+            <FormButton>Click Return Book!</FormButton>  
+         </FormStyle>}
       </EachBook>
     )
   }
