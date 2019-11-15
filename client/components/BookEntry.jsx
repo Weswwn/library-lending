@@ -96,7 +96,6 @@ class BookEntry extends React.Component {
       if (response.data === false) {
         alert('Incorrect membership number or you have not checked out this book!')
       } else {
-        console.log(response.data);
         this.setState({
           bookStatus: false
         })

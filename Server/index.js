@@ -31,19 +31,18 @@ app.post('/rent' , (req, res) => {
         let queryString = `INSERT INTO borrowed(username, membershipnumber, bookid, daterented, durationofrental, returndate)
         VALUES($1, $2 ,$3, $4, $5, $6)`;
         db.client.query(queryString, 
-          [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate], 
-            (err, results) => {
-              if (err) {
-                res.status(400).send(err)
-              } else {
-                res.send(results);
-                changeBookStatus(bookID, true);
-              }
-          });
+          [userName, membershipNumber, bookID, dateRented, durationOfRental, returnDate])
+          .then((results) => {
+            res.send(results);
+            changeBookStatus(bookID, true);
+          })
+          .catch((err) => {
+            res.status(400).send(err);
+          })
       }
     })
     .catch((error) => {
-      console.log(error);
+      res.send(error);
     })
 })
 
@@ -60,7 +59,6 @@ app.put('/return', (req, res) => {
       }
     })
     .catch((error) => {
-      console.log(error);
       res.send(error);
     })
 })
