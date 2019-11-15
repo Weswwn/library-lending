@@ -71,7 +71,7 @@ class BookEntry extends React.Component {
         })
       .then((response) => {
         if (response.data === false) {
-          alert('You have entered an incorrect membership number!');
+          alert('You have entered an incorrect membership number or username!');
         } else {
           this.setState({
             bookStatus: true
@@ -94,7 +94,7 @@ class BookEntry extends React.Component {
     })
     .then((response) => {
       if (response.data === false) {
-        alert('Incorrect membership number or you have not checked out this book!')
+        alert('You have entered an incorrect membership number/username or you have not checked out this book!')
       } else {
         this.setState({
           bookStatus: false
