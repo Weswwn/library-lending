@@ -90,7 +90,8 @@ class BookEntry extends React.Component {
     let { updateList, book } = this.props;
     axios.put('/return' , {
       membershipNumber: this.state.membershipNumber,
-      bookID: book.bookid
+      bookID: book.bookid,
+      userName: this.state.userName
     })
     .then((response) => {
       if (response.data === false) {

@@ -47,9 +47,9 @@ app.post('/rent' , (req, res) => {
 })
 
 app.put('/return', (req, res) => {
-  let { membershipNumber, bookID } = req.body;
-  let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND bookid = $2'
-  db.client.query(queryString, [membershipNumber, bookID])
+  let { membershipNumber, bookID , userName} = req.body;
+  let queryString = 'DELETE FROM borrowed WHERE membershipnumber = $1 AND username = $2'
+  db.client.query(queryString, [membershipNumber, userName])
     .then((result) => {
       if (result.rowCount === 0) {
         res.send(false);
