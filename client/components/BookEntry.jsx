@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+const EachBook = styled.div`
+  margin: 5 5 5 5;
+`
+
+
 class BookEntry extends React.Component {
   constructor(props) {
     super(props)
@@ -107,7 +112,7 @@ class BookEntry extends React.Component {
        : 
          <form id="return" onSubmit={this.onSubmit}>
             <div>Enter Membership Number: 
-              <input id="membership" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></input>
+              <input id="username" required minLength="1" type="text" onChange={this.onChange} placeholder="Enter Membership Number"></input>
             </div>
             <div>Enter Membership Number: 
                 <input id="membership" required minLength="1" type="number" onChange={this.onChange} placeholder="Enter Membership Number"></input>

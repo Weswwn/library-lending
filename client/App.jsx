@@ -1,6 +1,32 @@
 import React from 'react';
 import axios from 'axios';
 import BookList from './components/BookList.jsx';
+import styled from 'styled-components';
+
+const MainButtons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 20px 20px 20px;
+`
+
+const ButtonStyle = styled.button`
+  display: inline-block;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 1.5em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  display: block;
+  margin: 10px 10px 10px 10px;
+  outline: 0;
+  box-shadow: none!important;
+  :hover {
+    color: red;
+    cursor: pointer;
+  }
+`
 
 class App extends React.Component {
   constructor(props) {
@@ -43,8 +69,10 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <button onClick={this.filterBooks}>See Only Available Books</button>
-        <button onClick={this.getAllBooks}>See All Books</button>
+        <MainButtons>
+          <ButtonStyle onClick={this.filterBooks}>See Only Available Books</ButtonStyle>
+          <ButtonStyle onClick={this.getAllBooks}>See All Books</ButtonStyle>
+        </MainButtons>
         <span>
           <BookList availableBooks={this.state.availableBooks}/>
         </span>
