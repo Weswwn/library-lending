@@ -1,8 +1,5 @@
--- DROP DATABASE IF EXISTS library;
+CREATE DATABASE library;
 
--- CREATE DATABASE IF NOT EXISTS library;
-
--- USE library;
 \c library
 
 DROP TABLE IF EXISTS users CASCADE;

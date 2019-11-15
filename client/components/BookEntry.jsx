@@ -3,10 +3,15 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const EachBook = styled.div`
-  margin: 5 5 5 5;
+  margin: 30px 20px 30px 20px;
+  padding: 20px 20px 20px 20px;
+  border: 2px solid #1abc9c;
+  border-radius: 25px;
+  
 `
-
-
+const BookDetails = styled.div`
+  margin-bottom: 30px;
+`
 class BookEntry extends React.Component {
   constructor(props) {
     super(props)
@@ -19,7 +24,6 @@ class BookEntry extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onReturn = this.onReturn.bind(this);
   }
-
 
   onSubmit(e) {
     if (e.target.id === 'return') {
@@ -91,11 +95,16 @@ class BookEntry extends React.Component {
       })
     }
   }
+  
   render() {
     return (
-      <div>
-        <div>Book Title: {this.props.book.booktitle}</div>
-        Book Status: {this.state.bookStatus === false ? 'Available!' : 'Already Rented!'}
+      <EachBook>
+        <BookDetails>
+          Book Title: {this.props.book.booktitle}
+          <div>
+            Book Status: {this.state.bookStatus === false ? 'Available!' : 'Already Rented!'}
+          </div>
+        </BookDetails>
         {this.state.bookStatus === false ?
           <form id="rent" onSubmit={this.onSubmit}>
               <div>Enter Username: 
@@ -119,7 +128,7 @@ class BookEntry extends React.Component {
               </div>
             <button>Click Return Book!</button>  
          </form>}
-      </div>
+      </EachBook>
     )
   }
 }

@@ -17,7 +17,7 @@ const ButtonStyle = styled.button`
   margin: 1em;
   padding: 1.5em 1em;
   border: 2px solid palevioletred;
-  border-radius: 3px;
+  border-radius: 10px;
   display: block;
   margin: 10px 10px 10px 10px;
   outline: 0;
@@ -70,7 +70,7 @@ class App extends React.Component {
     return (
       <div>
         <MainButtons>
-          <ButtonStyle onClick={this.filterBooks}>See Only Available Books</ButtonStyle>
+          <ButtonStyle onClick={this.filterBooks}>See Available Books</ButtonStyle>
           <ButtonStyle onClick={this.getAllBooks}>See All Books</ButtonStyle>
         </MainButtons>
         <span>
